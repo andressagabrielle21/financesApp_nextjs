@@ -1,0 +1,2 @@
+-> Arquitetura seguida:
+    Frontend -> API (Controllers/Rotas) -> SERVICES (Camada de regras e lógicas de negócios) -> MODELS (Camada de dados)
