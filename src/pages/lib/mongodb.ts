@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 // Cache que evita múltiplas conexões em ambientes de desenvolvimento (HOT RELOAD)
 
-const MONGO_URL = process.env.MONGODB_URL as string;
+const MONGODB_URI = process.env.MONGODB_URI as string;
 
-if (!MONGO_URL) {
-  throw new Error("MONGO_URL não está definida no .env.local");
+if (!MONGODB_URI) {
+  throw new Error("MONGODB_URI não está definida no .env.local");
 }
 
 let cached = global.mongoose;
@@ -18,7 +18,7 @@ export async function connectToDatabase() {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGO_URL, {
+    cached.promise = mongoose.connect(MONGODB_URI, {
       bufferCommands: false,
     }).then((mongoose) => {
       return mongoose;
