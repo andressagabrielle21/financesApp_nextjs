@@ -24,7 +24,7 @@ export default function TransactionForm({ onSuccess }: TransactionFormProps) {
     }
 
     try {
-      await axios.post("api/transactions", {
+      await axios.post("http://localhost:3001/transacoes", {
         title, 
         value: Number(value),
         category,

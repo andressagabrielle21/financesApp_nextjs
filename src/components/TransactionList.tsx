@@ -2,6 +2,9 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { FaRegEdit } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
+
 
 type Transaction = {
   _id: string;
@@ -17,10 +20,10 @@ export default function TransactionList() {
   const [error, setError] = useState('');
 
   // Para executar a chamada GET assim que carregar a página
-  useEffect(() => {
+  useEffect(() => { 
     const fetchTransactions = async () => {
       try {
-        const res = await axios.get('/api/transactions');
+        const res = await axios.get('http://localhost:3001/transacoes');
         setTransactions(res.data);
       } catch (error) {
         setError(`Erro ao listar transações: ${error}`)
@@ -35,7 +38,7 @@ export default function TransactionList() {
   if(error) return <p>{error}</p>
 
   return (
-    <div>
+    <div className="rounded ">
       <h2>Transações</h2>
 
       <table>
@@ -55,6 +58,9 @@ export default function TransactionList() {
               <td>{item.value}</td>
               <td>{item.category}</td>
               <td>{new Date(item.createdAt).toLocaleDateString()}</td>
+
+              <td><FaRegEdit/></td>
+              <td> <MdDeleteOutline/> </td>
             </tr>
           ))}
         </tbody>
