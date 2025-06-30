@@ -1,25 +1,69 @@
 {
-    "transacoes": [
-        {
-            "id": 1,
-            "title": "LIVRO: O Sentido da Vida, Contardo Calligaris",
-            "value": 54.90,
-            "category": "Despesa",
-            "createdAt": "2021-10-22T14:48:00.000Z"
-        },
-        {
-            "id": 2,
-            "title": "Brisanet -JUNHO",
-            "value": 109.90,
-            "category": "Despesa",
-            "createdAt": "2012-10-10T14:48:00.000Z"
-        },
-        {
-            "id": 3,
-            "title": "Transferência (Larissa)",
-            "value": 314.9,
-            "category": "Receita",
-            "createdAt": "2019-10-30T14:48:00.000Z"
-        }
-    ]
+  "transacoes": [
+    {
+      "id": "1",
+      "title": "LIVRO: O Sentido da Vida, Contardo Calligaris",
+      "value": 54.9,
+      "category": "Despesa",
+      "createdAt": "2021-10-22T14:48:00.000Z"
+    },
+    {
+      "id": "2",
+      "title": "Brisanet -JUNHO",
+      "value": 109.9,
+      "category": "Despesa",
+      "createdAt": "2012-10-10T14:48:00.000Z"
+    },
+    {
+      "id": "3",
+      "title": "Transferência (Larissa)",
+      "value": 314.9,
+      "category": "Receita",
+      "createdAt": "2019-10-30T14:48:00.000Z"
+    },
+    {
+      "id": "6371",
+      "title": "Vôlei - Altiplano",
+      "value": 45,
+      "category": "Despesa"
+    },
+    {
+      "id": "c82f",
+      "title": "Óculos ",
+      "value": 300,
+      "category": "Despesa"
+    },
+    {
+      "id": "Compras na Amazon",
+      "value": 220,
+      "category": "Despesa"
+    },
+    {
+      "id": "Compras na Amazon",
+      "value": 220,
+      "date": "Mon Jun 30 2025 09:35:46 GMT-0300 (Horário Padrão de Brasília)",
+      "category": "Despesa"
+    },
+    {
+      "id": "7dad",
+      "title": "Investimentos",
+      "value": 750,
+      "date": "2025-06-11",
+      "category": "Receita"
+    },
+    {
+      "id": "afa5",
+      "title": "JBL 520bt",
+      "value": 210,
+      "date": "1999-03-21",
+      "category": "Despesa"
+    },
+    {
+      "id": "49ed",
+      "title": "Poupança",
+      "value": 1500,
+      "date": "2025-07-03",
+      "category": "Despesa"
+    }
+  ]
 }

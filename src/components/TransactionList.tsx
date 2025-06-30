@@ -11,13 +11,17 @@ type Transaction = {
   title: string;
   value: number;
   category: 'Despesa' | 'Receita';
-  createdAt: string;
+  date: string;
 }
 
 export default function TransactionList() {
   const [transactions, setTransactions] = useState<Transaction[]>([]); // Array com transações
+  // const [sum, setSum] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  let sum = 0;
+  transactions.forEach((item) => sum += item.value);
 
   // Para executar a chamada GET assim que carregar a página
   useEffect(() => { 
@@ -34,11 +38,32 @@ export default function TransactionList() {
     fetchTransactions();
   }, []);
 
+  console.log(transactions.map(item => item._id));
+
+  const handleDelete = async (id: string) => {
+      try {
+        await axios.delete(`http://localhost:3001/transacoes/${id}`);
+        setTransactions(transactions.filter(item => item._id !== id))
+      } catch (error) {
+        setError(`Erro ao deletar transação: ${error}`)
+      } finally {
+        setLoading(false);
+
+      }
+  }
+
+  // const editTransaction = async (id: string) => {
+  //   try {
+  //     await axios.put(`http://localhost:3001/transacoes/${id}`);
+  //     setTransactions
+  //   }
+  // }
+
   if(loading) return <p>Carregando transações...</p>;
   if(error) return <p>{error}</p>
 
   return (
-    <div className="rounded ">
+    <div className="rounded flex flex-col mx-6 gap-5">
       <h2>Transações</h2>
 
       <table>
@@ -57,14 +82,18 @@ export default function TransactionList() {
               <td>{item.title}</td>
               <td>{item.value}</td>
               <td>{item.category}</td>
-              <td>{new Date(item.createdAt).toLocaleDateString()}</td>
+              <td>{item.date}</td>
 
               <td><FaRegEdit/></td>
-              <td> <MdDeleteOutline/> </td>
+              <td onClick={() => handleDelete(item._id)}> <MdDeleteOutline /> </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      <div className="flex justify-center">
+        <h2 className="text-2xl">SOMA DAS TRANSAÇÕES: <span className="text-amber-500 font-bold"> R$ {sum} </span></h2>
+      </div>
     </div>
   )
 }

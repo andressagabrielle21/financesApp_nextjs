@@ -9,6 +9,7 @@ export default function TransactionForm({ onSuccess }: TransactionFormProps) {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState<number | "">("");
   const [category, setCategory] = useState("Receita");
+  const [date, setDate] = useState(new Date().toISOString());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -17,7 +18,7 @@ export default function TransactionForm({ onSuccess }: TransactionFormProps) {
     setError("");
     setLoading(true);
 
-    if (!title || !value || !category) {
+    if (!title || !value || !category || !date) {
       setError("Todos os campos devem ser obrigatórios.");
       setLoading(false);
       return;
@@ -27,12 +28,14 @@ export default function TransactionForm({ onSuccess }: TransactionFormProps) {
       await axios.post("http://localhost:3001/transacoes", {
         title, 
         value: Number(value),
+        date,
         category,
       });
 
       setTitle("");
       setValue("");
       setCategory("Receita");
+      setDate(new Date().toISOString());
       onSuccess(); // Função para avisar ao componentes pai para atualizar os dados
     } catch(error) {
       setError(`Erro ao salvar transação: ${error}`);
@@ -42,11 +45,11 @@ export default function TransactionForm({ onSuccess }: TransactionFormProps) {
   };
 
   return (
-    <div className="flex flex-col items-center ">
+    <div className="flex flex-col items-center">
       <h2 className="text-xl bold mb-5">Nova transação</h2>
 
       <form onSubmit={handleSubmit} className="flex flex-col content-start">
-        <div>
+        <div className="flex justify-between">
           <label>Título</label>
 
           <input 
@@ -57,7 +60,7 @@ export default function TransactionForm({ onSuccess }: TransactionFormProps) {
           />
         </div>
 
-        <div>
+        <div className="flex justify-between">
             <label>Valor</label>
             <input 
               type="text" 
@@ -67,7 +70,16 @@ export default function TransactionForm({ onSuccess }: TransactionFormProps) {
             />
         </div>
 
-        <div>
+        <div className="flex justify-between">
+            <label htmlFor="datePicker">Insira a data: </label>
+            <input 
+              type="date" 
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+        </div>
+
+        <div className="flex justify-between">
           <label>Categoria</label>
         <select 
           value={category}

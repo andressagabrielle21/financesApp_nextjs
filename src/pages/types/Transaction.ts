@@ -3,5 +3,5 @@ export interface ITransaction {
   title: string;
   value: number;
   category: "Receita" | "Despesa";
-  dateTime?: string;
+  dateTime?: Date;
 }
