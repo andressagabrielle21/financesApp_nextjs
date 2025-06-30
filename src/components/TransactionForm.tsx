@@ -45,7 +45,7 @@ export default function TransactionForm({ onSuccess }: TransactionFormProps) {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="border-amber-200 border-3 rounded-xl p-3 border-solid flex flex-col items-center">
       <h2 className="text-xl bold mb-5">Nova transação</h2>
 
       <form onSubmit={handleSubmit} className="flex flex-col content-start">

@@ -57,12 +57,23 @@ export default function TransactionList() {
       }
   }
 
-  // const editTransaction = async (id: string) => {
-  //   try {
-  //     await axios.put(`http://localhost:3001/transacoes/${id}`);
-  //     setTransactions
-  //   }
-  // }
+  const editTransaction = async (transaction) => {
+    try {
+      const {id, title, value, category} = transaction;
+
+      await axios.put(`http://localhost:3001/transacoes/${id}`, {
+        title,
+        value, 
+        category,
+        date: new Date().toISOString()
+      });
+    } catch(error) {
+      setError(`Erro ao editar transação: ${error}`)
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   if(loading) return <p>Carregando transações...</p>;
   if(error) return <p>{error}</p>
@@ -90,7 +101,7 @@ export default function TransactionList() {
               {/* <td>{format(item.date, 'dd/MM/yyyy')}</td> */}
               <td>{item.date}</td>
 
-              <td><FaRegEdit/></td>
+              <td onClick={() => editTransaction(item)}><FaRegEdit/></td>
               <td onClick={() => handleDelete(item.id)}> <MdDeleteOutline /> </td>
             </tr>
           ))}
