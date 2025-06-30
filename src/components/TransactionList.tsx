@@ -4,10 +4,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
+import {format} from "date-fns";
 
 
 type Transaction = {
-  _id: string;
+  id: string;
   title: string;
   value: number;
   category: 'Despesa' | 'Receita';
@@ -21,7 +22,11 @@ export default function TransactionList() {
   const [error, setError] = useState('');
 
   let sum = 0;
-  transactions.forEach((item) => sum += item.value);
+  transactions.forEach((item) => {
+    if (item.category == "Despesa") {
+      sum += item.value;
+    }
+  });
 
   // Para executar a chamada GET assim que carregar a página
   useEffect(() => { 
@@ -38,17 +43,17 @@ export default function TransactionList() {
     fetchTransactions();
   }, []);
 
-  console.log(transactions.map(item => item._id));
+  console.log(transactions.map(item => item.id));
 
   const handleDelete = async (id: string) => {
       try {
         await axios.delete(`http://localhost:3001/transacoes/${id}`);
-        setTransactions(transactions.filter(item => item._id !== id))
+        setTransactions(transactions.filter(item => item.id !== id))
       } catch (error) {
-        setError(`Erro ao deletar transação: ${error}`)
+        setError(`Erro ao deletar transação: ${error}`);
+        console.log(`http://localhost:3001/transacoes/${id}`);
       } finally {
         setLoading(false);
-
       }
   }
 
@@ -63,8 +68,8 @@ export default function TransactionList() {
   if(error) return <p>{error}</p>
 
   return (
-    <div className="rounded flex flex-col mx-6 gap-5">
-      <h2>Transações</h2>
+    <div className="rounded flex flex-col mx-6 gap-5 my-8">
+      <h2 className="text-3xl font-bold flex justify-center">Transações</h2>
 
       <table>
         <thead>
@@ -78,14 +83,15 @@ export default function TransactionList() {
 
         <tbody>
           {transactions.map((item) => (
-            <tr key={item._id}>
+            <tr key={item.id}>
               <td>{item.title}</td>
               <td>{item.value}</td>
               <td>{item.category}</td>
+              {/* <td>{format(item.date, 'dd/MM/yyyy')}</td> */}
               <td>{item.date}</td>
 
               <td><FaRegEdit/></td>
-              <td onClick={() => handleDelete(item._id)}> <MdDeleteOutline /> </td>
+              <td onClick={() => handleDelete(item.id)}> <MdDeleteOutline /> </td>
             </tr>
           ))}
         </tbody>
